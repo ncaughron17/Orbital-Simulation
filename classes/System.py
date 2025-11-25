@@ -1,5 +1,7 @@
 import turtle
 import time
+import math
+import numpy as np
 
 class system:
     def __init__(self, width, height):
@@ -21,26 +23,37 @@ class system:
             obj.draw()
         self.system.update()
 
-    def calcGrav(self, A: object, B: object):
+    def calcGrav(self, A: object, B: object, isColliding):
         radiusVec = (B.pos[0] - A.pos[0], B.pos[1] - A.pos[1])
         #print(B.name, B.pos)
         distance = (radiusVec[0]**2 + radiusVec[1]**2)**0.5
-        forceMag = (6.67430e-11 * A.mass * B.mass) / (distance**2)
+        forceMag = ((6.67430e-11 * A.mass * B.mass) / (distance**2))
+        if isColliding:
+            forceMag = -(forceMag * 0.5 - (A.radius + B.radius - distance) * 3)  # simple collision response
         forceVec = (forceMag * radiusVec[0]/distance, forceMag * radiusVec[1]/distance)
+        
         A.updateVel((forceVec[0]/A.mass, forceVec[1]/A.mass))
         B.updateVel((-forceVec[0]/B.mass, -forceVec[1]/B.mass))
 
-    def calcAllGrav(self):
+    def checkCollision(self, A: object, B: object):
+        radiusVec = (B.pos[0] - A.pos[0], B.pos[1] - A.pos[1])
+        distance = (radiusVec[0]**2 + radiusVec[1]**2)**0.5
+        if distance <= A.radius + B.radius:
+            return True
+        return False
+
+    def calcAllGravAndColl(self):
         for A in self.objects:
             checkList = self.objects.copy()
             checkList.remove(A)
             for B in checkList:
-                self.calcGrav(A, B)
+                self.calcGrav(A, B, self.checkCollision(A, B))
 
     def updateAll(self, timeInterval):
-        self.calcAllGrav()
+        self.calcAllGravAndColl()
         for obj in self.objects:
             obj.updatePos(timeInterval)
+            
         
         
 

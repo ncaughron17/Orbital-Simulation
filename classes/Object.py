@@ -19,7 +19,9 @@ class object(turtle.Turtle):
 
 
     def updateVel(self, vel):
-        self.vel = (self.vel[0] + vel[0], self.vel[1] + vel[1])
+        if(not self.isStatic):
+            self.vel = (self.vel[0] + vel[0], self.vel[1] + vel[1])
+        
 
     def updatePos(self, timeInterval):
         self.pos = [self.pos[0] + self.vel[0] * timeInterval/1000, self.pos[1] + self.vel[1] * timeInterval/1000]
