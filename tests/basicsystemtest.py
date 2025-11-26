@@ -21,11 +21,15 @@ env = system(1000, 800)
 #k = object("k", 8, 10e12, (-145,12), (-110,190), env, "red", False)
 #l = object("l", 8, 10e12, (-135,-5), (-110,190), env, "red", False)
 
-orbiting_body = Cluster(70, (-190, 0), 20, 5, 10e11, (-50, 180), "red", env)
+#orbiting_body = Cluster(70, (-190, 0), 20, 5, 10e11, (-50, 180), "red", env) #Interesting config 1
+#orbiting_body = Cluster(70, (-290, 0), 20, 5, 10e11, (-50, 180), "red", env) #interesting config 2
+orbiting_body = Cluster(70, (-290, 0), 20, 5, 10e11, (-300, 800), "yellow", env) #massive cluster to simulate star orbit, forming accretion disk
 
 
 
-sun = object("sun", 15, 10e14, (0,0), (0,0), env, "yellow", True)
+#sun = object("sun", 15, 10e14, (0,0), (0,0), env, "yellow", True) #interesting config 1
+#sun = object("sun", 15, 20e14, (0,0), (0,0), env, "yellow", True) #interesting config 2
+sun = object("sun", 15, 400e14, (0,0), (0,0), env, "grey", True) #extreme gravity, akin to a small black hole
 
 #print(env.objects)
 

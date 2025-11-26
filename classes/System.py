@@ -55,7 +55,7 @@ class system:
         if isColliding:
             if self.cluster.containsObj(A) is not None and self.cluster.containsObj(B) is not None:
                 #print(forceMag)
-                forceMag = -(forceMag * 1) - (A.radius + B.radius - distance) * 45e10 # simple collision response
+                forceMag = -(forceMag * 1) - (A.radius + B.radius - distance) * 48e10 # simple collision response
                 
             else:
                 if A.radius < B.radius:
