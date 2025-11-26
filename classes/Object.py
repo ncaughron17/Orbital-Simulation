@@ -22,7 +22,6 @@ class object(turtle.Turtle):
         if(not self.isStatic):
             self.vel = (self.vel[0] + vel[0], self.vel[1] + vel[1])
         
-
     def updatePos(self, timeInterval):
         self.pos = [self.pos[0] + self.vel[0] * timeInterval/1000, self.pos[1] + self.vel[1] * timeInterval/1000]
 
@@ -31,7 +30,7 @@ class object(turtle.Turtle):
         self.goto(self.pos[0], self.pos[1])
         self.dot(self.radius*2, self.color_)
         self.penup()
-        self.drawVelocity()
+        #self.drawVelocity()
 
     def drawVelocity(self):
         self.width(3)
