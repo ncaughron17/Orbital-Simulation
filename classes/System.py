@@ -53,13 +53,13 @@ class system:
         radiusVec = (B.pos[0] - A.pos[0], B.pos[1] - A.pos[1])
         #print(B.name, B.pos)
         distance = (radiusVec[0]**2 + radiusVec[1]**2)**0.5
-        intersectionProportion = distance / (A.radius + B.radius)
+        intersectionProportion = 1 - (distance / (A.radius + B.radius))
         forceMag = ((6.67430e-11 * A.mass * B.mass) / (distance**2))
         relVel = np.array((B.vel[0] - A.vel[1], B.vel[1] - B.vel[0]))
         if isColliding:
             if self.cluster.containsObj(A) is not None and self.cluster.containsObj(B) is not None:
                 #forceMag = -( ((6.67430e-11 * A.mass * B.mass) / (intersectionProportion**2)) * 1) - (3000000000* np.sqrt(sum(relVel * relVel))) #(A.radius + B.radius - distance) * 48e10 # simple collision response
-                forceMag = -(distance * 3000000000) - (2000000000* np.sqrt(sum(relVel * relVel))) #alternate repulsion, independent of particle mass, not related to gravity, closer to true PD control
+                forceMag = -(intersectionProportion * 3000000000) - (2000000000* np.sqrt(sum(relVel * relVel)))#alternate repulsion, independent of particle mass, not related to gravity, closer to true PD control
                 
                 
             else:
