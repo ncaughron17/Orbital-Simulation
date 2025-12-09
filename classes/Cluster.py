@@ -2,6 +2,7 @@ import math
 import numpy as np
 from classes.Object import object
 from classes.System import system
+import turtle
 
 class Cluster:
     def __init__(self, num, center, clusterRadius_, objectRadius_, objectMass_, initVel_, color_, system_: system):
@@ -9,6 +10,10 @@ class Cluster:
         self.avg_velocity = ()
         self.center_of_mass = ()
         system_.addCluster(self)
+        self.vectorPen = turtle.Turtle()
+        self.vectorPen.penup()
+        self.vectorPen.hideturtle()
+
 
     def generatePoints(self, clusterRadius, objNum):
         points = []
@@ -33,5 +38,33 @@ class Cluster:
     def containsObj(self, obj: object):
         if obj in self.objects:
             return obj in self.objects
+    
+    def drawClusterVector(self):
+        scale = 0.1#scaling for arrow length, for visibility
+        self.vectorPen.clear()
+        self.vectorPen.width(3)
+        self.vectorPen.color("white")
+        self.vectorPen.goto(self.center_of_mass[0], self.center_of_mass[1])
+        self.vectorPen.pendown()
+        self.vectorPen.goto((self.center_of_mass[0] + scale * self.avg_velocity[0]), (self.center_of_mass[1] + scale * self.avg_velocity[1]))
+        self.vectorPen.penup()
+
+    def updateClusterVel(self):
+        xAvg  = 0
+        yAvg = 0
+        for obj in self.objects:
+            xAvg = xAvg + (obj.vel[0])
+            yAvg = yAvg + (obj.vel[1])
+        self.avg_velocity = np.asarray((xAvg/len(self.objects), yAvg/len(self.objects)))
+        
+    def updateClusterPos(self):
+        xAvg  = 0
+        yAvg = 0
+        for obj in self.objects:
+            xAvg = xAvg + (obj.pos[0])
+            yAvg = yAvg + (obj.pos[1])
+        self.center_of_mass = np.asarray((xAvg/len(self.objects), yAvg/len(self.objects)))
+        
+            
 
     

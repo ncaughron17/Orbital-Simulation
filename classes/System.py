@@ -71,6 +71,10 @@ class system:
         
         A.updateVel((forceVec[0]/A.mass, forceVec[1]/A.mass))
         B.updateVel((-forceVec[0]/B.mass, -forceVec[1]/B.mass))
+        # if self.cluster is not None: #
+        #     self.cluster.updateClusterPos()
+        #     self.cluster.updateClusterVel()
+        #     self.cluster.drawClusterVector()
 
     def checkCollision(self, A: object, B: object):
         radiusVec = (B.pos[0] - A.pos[0], B.pos[1] - A.pos[1])
