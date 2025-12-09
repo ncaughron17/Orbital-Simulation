@@ -1,5 +1,6 @@
 import turtle
 from classes.System import system
+import numpy as np
 
 class object(turtle.Turtle):
 
@@ -9,10 +10,11 @@ class object(turtle.Turtle):
         self.isStatic = isStatic
         self.color_ = color
         self.name = name
-        self.vel = vel
-        self.pos = pos
+        self.vel = np.asarray(vel)
+        self.pos = np.asarray(pos)
         self.mass = mass
-        self.acc = (0,0)
+        self.acc = np.asarray((0,0))
+        self.lastVel = (0,0)
         #self.prev
 
         self.penup()
@@ -22,11 +24,15 @@ class object(turtle.Turtle):
 
     def updateVel(self, vel):
         if(not self.isStatic):
+            self.lastVel = self.vel
             self.vel = (self.vel[0] + vel[0], self.vel[1] + vel[1])
 
         
     def updatePos(self, timeInterval):
         self.pos = [self.pos[0] + self.vel[0] * timeInterval/1000, self.pos[1] + self.vel[1] * timeInterval/1000]
+
+    def updateAcc(self, interval):
+        self.acc = np.asarray((self.vel[0] - self.lastVel[0]) / interval,(self.vel[0] - self.lastVel[0]) / interval)
 
     def draw(self):
         self.clear()

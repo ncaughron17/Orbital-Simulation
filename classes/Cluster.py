@@ -40,7 +40,7 @@ class Cluster:
             return obj in self.objects
     
     def drawClusterVector(self):
-        scale = 0.1#scaling for arrow length, for visibility
+        scale = 0.5#scaling for arrow length, for visibility
         self.vectorPen.clear()
         self.vectorPen.width(3)
         self.vectorPen.color("white")

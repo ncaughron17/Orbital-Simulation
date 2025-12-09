@@ -16,6 +16,8 @@ class system:
         self.statBlock.color("white")
         self.statBlock.goto(-width//2 + 10, height//2 - 30)
 
+        self.lastInterval = 0
+
         self.objects = []
         self.numObjects = 0
         self.cluster = None
@@ -52,10 +54,11 @@ class system:
         #print(B.name, B.pos)
         distance = (radiusVec[0]**2 + radiusVec[1]**2)**0.5
         forceMag = ((6.67430e-11 * A.mass * B.mass) / (distance**2))
+        relVel = np.array((B.vel[0] - A.vel[1], B.vel[1] - B.vel[0]))
         if isColliding:
             if self.cluster.containsObj(A) is not None and self.cluster.containsObj(B) is not None:
-                #print(forceMag)
-                forceMag = -(forceMag * 1) - (A.radius + B.radius - distance) * 48e10 # simple collision response
+                #print(relVel)
+                forceMag = -(forceMag * 1) - (3000000000* np.sqrt(sum(relVel * relVel)))#(A.radius + B.radius - distance) * 48e10 # simple collision response
                 
             else:
                 if A.radius < B.radius:
@@ -70,11 +73,14 @@ class system:
         forceVec = (forceMag * radiusVec[0]/distance, forceMag * radiusVec[1]/distance)
         
         A.updateVel((forceVec[0]/A.mass, forceVec[1]/A.mass))
+        A.updateAcc(self.lastInterval)
         B.updateVel((-forceVec[0]/B.mass, -forceVec[1]/B.mass))
-        # if self.cluster is not None: #
-        #     self.cluster.updateClusterPos()
-        #     self.cluster.updateClusterVel()
-        #     self.cluster.drawClusterVector()
+        B.updateAcc(self.lastInterval)
+
+        if self.cluster is not None: #UNCOMMENT IF YOU WANT CLUSTER VELOCITY VECTOR
+            self.cluster.updateClusterPos()
+            self.cluster.updateClusterVel()
+            self.cluster.drawClusterVector()
 
     def checkCollision(self, A: object, B: object):
         radiusVec = (B.pos[0] - A.pos[0], B.pos[1] - A.pos[1])
@@ -103,6 +109,7 @@ class system:
         while True:
             currentTime = time.time()
             timeInterval = (currentTime - lastTime) * 1000  # in milliseconds
+            self.lastInterval = timeInterval
             self.updateAll(timeInterval)
             self.drawAll()
             lastTime = currentTime
