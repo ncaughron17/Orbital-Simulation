@@ -13,6 +13,7 @@ class Cluster:
         self.vectorPen = turtle.Turtle()
         self.vectorPen.penup()
         self.vectorPen.hideturtle()
+        self.loggedPosition = []
 
 
     def generatePoints(self, clusterRadius, objNum):
@@ -64,6 +65,8 @@ class Cluster:
             xAvg = xAvg + (obj.pos[0])
             yAvg = yAvg + (obj.pos[1])
         self.center_of_mass = np.asarray((xAvg/len(self.objects), yAvg/len(self.objects)))
+        self.loggedPosition.append(self.center_of_mass)
+
         
             
 

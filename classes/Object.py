@@ -42,8 +42,9 @@ class object(turtle.Turtle):
         #self.drawVelocity()
 
     def drawVelocity(self):
+        factor = 0.5#scaling for arrow length, for visibility
         self.width(3)
-        self.color("white")
+        self.color("grey")
         self.pendown()
-        self.goto(self.pos[0] + self.vel[0], self.pos[1] + self.vel[1])
+        self.goto(self.pos[0] + factor * self.vel[0], self.pos[1] + factor * self.vel[1])
         self.penup()
