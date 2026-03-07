@@ -55,7 +55,7 @@ class system:
     def drawAll(self):
         for obj in self.objects:
             obj.draw()
-            obj.drawVelocity()
+            #obj.drawVelocity()
         self.system.update()
 
     def calcGrav(self, A: object, B: object, isColliding):
@@ -65,14 +65,18 @@ class system:
         intersectionProportion = 1 - (distance / (A.radius + B.radius))
         forceMag = ((6.67430e-11 * A.mass * B.mass) / (distance**2))
         relVel = np.array((B.vel[0] - A.vel[0], B.vel[1] - A.vel[1]))
+        #A.color_ = "yellow"
+        #B.color_ = "yellow"
         if isColliding:
+            #A.color_ = "red"
+            #B.color_ = "red"
             if self.cluster.containsObj(A) is not None and self.cluster.containsObj(B) is not None:
                 #forceMag = -( ((6.67430e-11 * A.mass * B.mass) / (intersectionProportion**2)) * 1) - (3000000000* np.sqrt(sum(relVel * relVel))) #(A.radius + B.radius - distance) * 48e10 # simple collision response
                 
-                forceMag = -(intersectionProportion * 50000000.0) - (400.0* np.sqrt(sum(relVel * relVel)))#alternate repulsion, independent of particle mass, not related to gravity, closer to true PD control
+                forceMag = -(intersectionProportion * 50000000.0) - (400.0* np.sqrt(sum(relVel * relVel)))#alternate dampening, independent of particle mass, not related to gravity
                 
                 
-            else:
+            else:#destroy smaller object if not in same cluster
                 if A.radius < B.radius:
                     A.clear()
                     self.removeObject(A)

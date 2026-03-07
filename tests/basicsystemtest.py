@@ -20,13 +20,13 @@ env = system(2560, 1440, 10)
 #Orbiting_body = Cluster(30, (-300, 0), 20, 5, 10e11, (0, 180), "red", env)
 #sun = object("sun", 15, 10e14, (0,0), (0,0), env, "yellow", True) #interesting config 1
 
-#sun = object("sun", 15, 200e14, (0,0), (0,0), env, "grey", True) #extreme gravity, akin to a small black hole
-#orbiting_body = Cluster(200, (-400, 0), 20, 5, 20e11, (0,310), "yellow", env)
+bh = object("bh", 15, 200e16, (0,0), (0,0), env, "grey", True) #extreme gravity, akin to a small black hole
+orbiting_body = Cluster(80, (400, 0), 20, 5, 20e13, (0,-310), "yellow", env)
 
-body_one = object("body_one", 30, 10e18, (-400,0), (0,-500), env, "red", False)
-body_two = object("body_two", 30, 10e18, (400,0), (0,500), env, "blue", False)
+#body_one = object("body_one", 30, 10e18, (-400,0), (0,-500), env, "red", False)
+#body_two = object("body_two", 30, 10e18, (400,0), (0,500), env, "blue", False)
 
-#orbiting_body = Cluster(200, (0, 0), 20, 5, 20e11, (0,0), "yellow", env)
+#orbiting_body = Cluster(80, (0, 0), 20, 5, 20e11, (0,0), "yellow", env)
 
 
 #print(env.objects)
